@@ -1,0 +1,46 @@
+# depslib dependency file v1.0
+1432056365 source:/home/mikhail/Desktop/Desktop/Lokot/smart_ptr/main.cpp
+	"tests.h"
+
+1432064260 /home/mikhail/Desktop/Desktop/Lokot/smart_ptr/tests.h
+
+1433356948 source:/home/mikhail/Desktop/Desktop/Lokot/smart_ptr/tests.cpp
+	<gtest/gtest.h>
+	<vector>
+	"tests.h"
+	"smart_ptr.h"
+	"exception.h"
+
+1433354896 /home/mikhail/Desktop/Desktop/Lokot/smart_ptr/smart_ptr.h
+	"proxy.h"
+	"unique_ptr.h"
+	"SW_base.h"
+	"weak_ptr.h"
+	"shared_ptr.h"
+	"esft.h"
+
+1433355767 /home/mikhail/Desktop/Desktop/Lokot/smart_ptr/proxy.h
+	"unique_ptr.h"
+
+1433357508 /home/mikhail/Desktop/Desktop/Lokot/smart_ptr/unique_ptr.h
+	<algorithm>
+
+1433354877 /home/mikhail/Desktop/Desktop/Lokot/smart_ptr/SW_base.h
+	"proxy.h"
+
+1433354888 /home/mikhail/Desktop/Desktop/Lokot/smart_ptr/weak_ptr.h
+	"smart_ptr.h"
+	<algorithm>
+
+1433357508 /home/mikhail/Desktop/Desktop/Lokot/smart_ptr/shared_ptr.h
+	<algorithm>
+	<type_traits>
+	"smart_ptr.h"
+	"exception.h"
+
+1433326309 /home/mikhail/Desktop/Desktop/Lokot/smart_ptr/exception.h
+	<stdexcept>
+
+1432571604 /home/mikhail/Desktop/Desktop/Lokot/smart_ptr/esft.h
+	"smart_ptr.h"
+
