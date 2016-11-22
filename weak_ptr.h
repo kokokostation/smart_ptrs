@@ -9,8 +9,11 @@ namespace tuz
 template<typename T>
 void weak_ptr<T>::substitute_proxy(Proxy_base<T>* another_proxy) noexcept
 {
-    check_out();
-    set_proxy(another_proxy);
+    if(another_proxy != SW_base<T>::proxy)
+    {
+        check_out();
+        set_proxy(another_proxy);
+    }
 }
 
 template<typename T>

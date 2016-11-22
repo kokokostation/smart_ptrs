@@ -419,6 +419,20 @@ TEST(shared_ptr_and_weak_ptr, test_4)
     }
 }
 
+//self-assignment problem
+TEST(shared_ptr_and_weak_ptr, test_5)
+{
+    shared_ptr<int> sp = make_shared<int>(9);
+
+    EXPECT_NO_THROW(sp = sp);
+
+    weak_ptr<int> wp(sp);
+
+    sp.reset();
+
+    EXPECT_NO_THROW(wp = wp);
+}
+
 //Вспомогательная функция.
 void esft_test_helper(shared_ptr<Esft_test>& sp, Esft_test* esft)
 {
