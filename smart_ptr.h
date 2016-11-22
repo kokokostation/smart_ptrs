@@ -56,7 +56,6 @@ private:
 
     void check_out() noexcept;
     void check_in() noexcept;
-    void substitute_proxy(Proxy_base<T>* another_proxy = Proxy_dummy<T>::instance_ptr()) noexcept;
     void set_proxy(Proxy_base<T>* another_proxy = Proxy_dummy<T>::instance_ptr()) noexcept;
 
 public:
@@ -101,7 +100,6 @@ class weak_ptr : public SW_base<T>
 private:
     void check_out() noexcept;
     void check_in() noexcept;
-    void substitute_proxy(Proxy_base<T>* another_proxy = Proxy_dummy<T>::instance_ptr()) noexcept;
     void set_proxy(Proxy_base<T>* another_proxy = Proxy_dummy<T>::instance_ptr()) noexcept;
 
 public:

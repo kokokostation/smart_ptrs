@@ -76,16 +76,6 @@ void shared_ptr<T>::set_proxy(Proxy_base<T>* another_proxy) noexcept
 }
 
 template<typename T>
-void shared_ptr<T>::substitute_proxy(Proxy_base<T>* another_proxy) noexcept
-{
-    if(another_proxy != SW_base<T>::proxy)
-    {
-        check_out();
-        set_proxy(another_proxy);
-    }
-}
-
-template<typename T>
 shared_ptr<T>::shared_ptr(Proxy_base<T>& p) noexcept
 {
     set_new_proxy(&p);
@@ -130,7 +120,10 @@ shared_ptr<T>& shared_ptr<T>::operator=(shared_ptr&& sp) noexcept
 template<typename T>
 shared_ptr<T>& shared_ptr<T>::operator=(const shared_ptr& sp) noexcept
 {
-    substitute_proxy(sp.proxy);
+    shared_ptr<T> tmp(sp);
+
+    std::swap(*this, tmp);
+
     return *this;
 }
 

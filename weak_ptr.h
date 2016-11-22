@@ -7,16 +7,6 @@ namespace tuz
 {
 
 template<typename T>
-void weak_ptr<T>::substitute_proxy(Proxy_base<T>* another_proxy) noexcept
-{
-    if(another_proxy != SW_base<T>::proxy)
-    {
-        check_out();
-        set_proxy(another_proxy);
-    }
-}
-
-template<typename T>
 void weak_ptr<T>::set_proxy(Proxy_base<T>* another_proxy) noexcept
 {
     SW_base<T>::proxy = another_proxy;
@@ -58,15 +48,17 @@ weak_ptr<T>::weak_ptr(const shared_ptr<T>& sp) noexcept
 template<typename T>
 weak_ptr<T>& weak_ptr<T>::operator=(const weak_ptr& wp) noexcept
 {
-    substitute_proxy(wp.proxy);
+    weak_ptr<T> tmp(wp);
+
+    std::swap(*this, tmp);
+
     return *this;
 }
 
 template<typename T>
 weak_ptr<T>& weak_ptr<T>::operator=(const shared_ptr<T>& sp) noexcept
 {
-    substitute_proxy(sp.proxy);
-    return *this;
+    return *this = weak_ptr(sp);
 }
 
 template<typename T>
@@ -78,7 +70,8 @@ weak_ptr<T>::~weak_ptr()
 template<typename T>
 void weak_ptr<T>::reset() noexcept
 {
-    substitute_proxy();
+    check_out();
+    set_proxy();
 }
 
 template<typename T>
