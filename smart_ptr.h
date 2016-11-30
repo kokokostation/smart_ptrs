@@ -37,7 +37,7 @@ template<typename T>
 class enable_shared_from_this;
 
 template<typename T>
-class shared_ptr : public SW_base<T>
+class shared_ptr : public SW_base<T, shared_ptr<T>>
 {
     template<typename U, typename... R>
     friend shared_ptr<U> make_shared(R&&... args);
@@ -53,10 +53,6 @@ private:
     void make_proxy(T* ptr = nullptr, const D& deleter = default_delete<T>());
     void set_new_proxy(Proxy_base<T>* p) noexcept;
     shared_ptr(Proxy_base<T>& p) noexcept;
-
-    void check_out() noexcept;
-    void check_in() noexcept;
-    void set_proxy(Proxy_base<T>* another_proxy = Proxy_dummy<T>::instance_ptr()) noexcept;
 
 public:
     shared_ptr() noexcept;
@@ -92,15 +88,10 @@ public:
 
 
 template<typename T>
-class weak_ptr : public SW_base<T>
+class weak_ptr : public SW_base<T, weak_ptr<T>>
 {
     friend void std::swap<T>(weak_ptr& sp_a, weak_ptr& sp_b) noexcept;
     friend shared_ptr<T>;
-
-private:
-    void check_out() noexcept;
-    void check_in() noexcept;
-    void set_proxy(Proxy_base<T>* another_proxy = Proxy_dummy<T>::instance_ptr()) noexcept;
 
 public:
     weak_ptr() noexcept;
@@ -116,7 +107,7 @@ public:
 #ifdef DEBUG
     size_t DEBUG_weak_links_count() const noexcept
     {
-        return SW_base<T>::proxy->DEBUG_weak_links_count();
+        return SW_base<T, weak_ptr>::proxy->DEBUG_weak_links_count();
     };
 #endif
 

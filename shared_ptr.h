@@ -33,15 +33,15 @@ template<typename T>
 shared_ptr<T>::shared_ptr(shared_ptr<T>&& sp) noexcept :
 shared_ptr()
 {
-    SW_base<T>::swap(sp);
+    SW_base<T, shared_ptr>::swap(sp);
 }
 
 template<typename T>
 void shared_ptr<T>::set_new_proxy(Proxy_base<T>* p) noexcept
 {
-    set_proxy(p);
+    SW_base<T, shared_ptr>::set_proxy(p);
 
-    wp_init_helper(SW_base<T>::proxy->get());
+    wp_init_helper(SW_base<T, shared_ptr>::proxy->get());
 }
 
 template<typename T>
@@ -51,28 +51,7 @@ void shared_ptr<T>::make_proxy(T* ptr, const D& deleter)
     if(ptr)
         set_new_proxy(new Proxy_deleter<T, D>(ptr, deleter));
     else
-        set_proxy();
-}
-
-template<typename T>
-void shared_ptr<T>::check_out() noexcept
-{
-    SW_base<T>::proxy->check_out(*this);
-    if(SW_base<T>::proxy->need_deletion())
-        delete SW_base<T>::proxy;
-}
-
-template<typename T>
-void shared_ptr<T>::check_in() noexcept
-{
-    SW_base<T>::proxy->check_in(*this);
-}
-
-template<typename T>
-void shared_ptr<T>::set_proxy(Proxy_base<T>* another_proxy) noexcept
-{
-    SW_base<T>::proxy = another_proxy;
-    check_in();
+        SW_base<T, shared_ptr>::set_proxy();
 }
 
 template<typename T>
@@ -84,7 +63,7 @@ shared_ptr<T>::shared_ptr(Proxy_base<T>& p) noexcept
 template<typename T>
 shared_ptr<T>::shared_ptr(const shared_ptr& sp) noexcept
 {
-    set_proxy(sp.proxy);
+    SW_base<T, shared_ptr>::set_proxy(sp.proxy);
 }
 
 template<typename T>
@@ -93,7 +72,7 @@ shared_ptr<T>::shared_ptr(const weak_ptr<T>& wp)
     if(wp.proxy->expired())
         throw bad_weak_ptr();
     else
-        set_proxy(wp.proxy);
+        SW_base<T, shared_ptr>::set_proxy(wp.proxy);
 }
 
 template<typename T>
@@ -106,13 +85,13 @@ shared_ptr<T>::shared_ptr(unique_ptr<T, D>&& up) : shared_ptr(up.get(), up.get_d
 template<typename T>
 shared_ptr<T>::~shared_ptr()
 {
-    check_out();
+    SW_base<T, shared_ptr>::check_out();
 }
 
 template<typename T>
 shared_ptr<T>& shared_ptr<T>::operator=(shared_ptr&& sp) noexcept
 {
-    SW_base<T>::swap(sp);
+    SW_base<T, shared_ptr>::swap(sp);
     sp.reset();
     return *this;
 }
@@ -131,7 +110,7 @@ template<typename T>
 template<typename D>
 shared_ptr<T>& shared_ptr<T>::operator=(unique_ptr<T, D>&& up)
 {
-    check_out();
+    SW_base<T, shared_ptr>::check_out();
     make_proxy(up.get(), up.get_deleter());
 
     up.release();
@@ -143,38 +122,38 @@ template<typename T>
 template<typename D>
 void shared_ptr<T>::reset(T* ptr, const D& deleter)
 {
-    check_out();
+    SW_base<T, shared_ptr>::check_out();
     make_proxy(ptr, deleter);
 }
 
 template<typename T>
 bool shared_ptr<T>::operator==(const shared_ptr& sp) const noexcept
 {
-    return SW_base<T>::proxy->get() == sp.proxy->get();
+    return SW_base<T, shared_ptr>::proxy->get() == sp.proxy->get();
 }
 
 template<typename T>
 bool shared_ptr<T>::operator<=(const shared_ptr& sp) const noexcept
 {
-    return SW_base<T>::proxy->get() <= sp.proxy->get();
+    return SW_base<T, shared_ptr>::proxy->get() <= sp.proxy->get();
 }
 
 template<typename T>
 bool shared_ptr<T>::operator>=(const shared_ptr& sp) const noexcept
 {
-    return SW_base<T>::proxy->get() >= sp.proxy->get();
+    return SW_base<T, shared_ptr>::proxy->get() >= sp.proxy->get();
 }
 
 template<typename T>
 bool shared_ptr<T>::operator<(const shared_ptr& sp) const noexcept
 {
-    return SW_base<T>::proxy->get() < sp.proxy->get();
+    return SW_base<T, shared_ptr>::proxy->get() < sp.proxy->get();
 }
 
 template<typename T>
 bool shared_ptr<T>::operator>(const shared_ptr& sp) const noexcept
 {
-    return SW_base<T>::proxy->get() > sp.proxy->get();
+    return SW_base<T, shared_ptr>::proxy->get() > sp.proxy->get();
 }
 
 template<typename T>
@@ -186,25 +165,25 @@ bool shared_ptr<T>::operator!=(const shared_ptr& sp) const noexcept
 template<typename T>
 T& shared_ptr<T>::operator*() const noexcept
 {
-    return *SW_base<T>::proxy->get();
+    return *SW_base<T, shared_ptr>::proxy->get();
 }
 
 template<typename T>
 T* shared_ptr<T>::operator->() const noexcept
 {
-    return SW_base<T>::proxy->get();
+    return SW_base<T, shared_ptr>::proxy->get();
 }
 
 template<typename T>
 shared_ptr<T>::operator bool() const noexcept
 {
-    return SW_base<T>::proxy->get() != nullptr;
+    return SW_base<T, shared_ptr>::proxy->get() != nullptr;
 }
 
 template<typename T>
 T* shared_ptr<T>::get() const noexcept
 {
-    return SW_base<T>::proxy->get();
+    return SW_base<T, shared_ptr>::proxy->get();
 }
 
 template<typename T, typename... R>

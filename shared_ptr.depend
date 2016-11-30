@@ -89,3 +89,48 @@
 1432571604 /run/media/mikhail/cf8beb1e-b35f-4563-b2be-db41b8597493/home/mikhail/Desktop/Desktop/Lokot/smart_ptr/esft.h
 	"smart_ptr.h"
 
+1480541361 source:/run/media/mikhail/cf8beb1e-b35f-4563-b2be-db41b8597493/home/mikhail/Desktop/Desktop/Lokot/smart_ptrs/main.cpp
+	"tests.h"
+
+1480541361 /run/media/mikhail/cf8beb1e-b35f-4563-b2be-db41b8597493/home/mikhail/Desktop/Desktop/Lokot/smart_ptrs/tests.h
+
+1480541361 source:/run/media/mikhail/cf8beb1e-b35f-4563-b2be-db41b8597493/home/mikhail/Desktop/Desktop/Lokot/smart_ptrs/tests.cpp
+	<gtest/gtest.h>
+	<vector>
+	"tests.h"
+	"smart_ptr.h"
+	"exception.h"
+
+1480542813 /run/media/mikhail/cf8beb1e-b35f-4563-b2be-db41b8597493/home/mikhail/Desktop/Desktop/Lokot/smart_ptrs/smart_ptr.h
+	"proxy.h"
+	"unique_ptr.h"
+	"SW_base.h"
+	"weak_ptr.h"
+	"shared_ptr.h"
+	"esft.h"
+
+1480541361 /run/media/mikhail/cf8beb1e-b35f-4563-b2be-db41b8597493/home/mikhail/Desktop/Desktop/Lokot/smart_ptrs/proxy.h
+	"unique_ptr.h"
+
+1480541361 /run/media/mikhail/cf8beb1e-b35f-4563-b2be-db41b8597493/home/mikhail/Desktop/Desktop/Lokot/smart_ptrs/unique_ptr.h
+	<algorithm>
+
+1480542943 /run/media/mikhail/cf8beb1e-b35f-4563-b2be-db41b8597493/home/mikhail/Desktop/Desktop/Lokot/smart_ptrs/SW_base.h
+	"proxy.h"
+
+1480542700 /run/media/mikhail/cf8beb1e-b35f-4563-b2be-db41b8597493/home/mikhail/Desktop/Desktop/Lokot/smart_ptrs/weak_ptr.h
+	"smart_ptr.h"
+	<algorithm>
+
+1480542658 /run/media/mikhail/cf8beb1e-b35f-4563-b2be-db41b8597493/home/mikhail/Desktop/Desktop/Lokot/smart_ptrs/shared_ptr.h
+	<algorithm>
+	<type_traits>
+	"smart_ptr.h"
+	"exception.h"
+
+1480541361 /run/media/mikhail/cf8beb1e-b35f-4563-b2be-db41b8597493/home/mikhail/Desktop/Desktop/Lokot/smart_ptrs/exception.h
+	<stdexcept>
+
+1480541361 /run/media/mikhail/cf8beb1e-b35f-4563-b2be-db41b8597493/home/mikhail/Desktop/Desktop/Lokot/smart_ptrs/esft.h
+	"smart_ptr.h"
+

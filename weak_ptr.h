@@ -7,42 +7,21 @@ namespace tuz
 {
 
 template<typename T>
-void weak_ptr<T>::set_proxy(Proxy_base<T>* another_proxy) noexcept
-{
-    SW_base<T>::proxy = another_proxy;
-    check_in();
-}
-
-template<typename T>
-void weak_ptr<T>::check_out() noexcept
-{
-    SW_base<T>::proxy->check_out(*this);
-    if(SW_base<T>::proxy->need_deletion())
-        delete SW_base<T>::proxy;
-}
-
-template<typename T>
-void weak_ptr<T>::check_in() noexcept
-{
-    SW_base<T>::proxy->check_in(*this);
-}
-
-template<typename T>
 weak_ptr<T>::weak_ptr() noexcept
 {
-    set_proxy();
+    SW_base<T, weak_ptr>::set_proxy();
 }
 
 template<typename T>
 weak_ptr<T>::weak_ptr(const weak_ptr<T>& wp) noexcept
 {
-    set_proxy(wp.proxy);
+    SW_base<T, weak_ptr>::set_proxy(wp.proxy);
 }
 
 template<typename T>
 weak_ptr<T>::weak_ptr(const shared_ptr<T>& sp) noexcept
 {
-    set_proxy(sp.proxy);
+    SW_base<T, weak_ptr>::set_proxy(sp.proxy);
 }
 
 template<typename T>
@@ -64,20 +43,20 @@ weak_ptr<T>& weak_ptr<T>::operator=(const shared_ptr<T>& sp) noexcept
 template<typename T>
 weak_ptr<T>::~weak_ptr()
 {
-    check_out();
+    SW_base<T, weak_ptr>::check_out();
 }
 
 template<typename T>
 void weak_ptr<T>::reset() noexcept
 {
-    check_out();
-    set_proxy();
+    SW_base<T, weak_ptr>::check_out();
+    SW_base<T, weak_ptr>::set_proxy();
 }
 
 template<typename T>
 shared_ptr<T> weak_ptr<T>::lock() const
 {
-    if(SW_base<T>::proxy->expired())
+    if(SW_base<T, weak_ptr>::proxy->expired())
         return shared_ptr<T>();
     else
         return shared_ptr<T>(*this);
