@@ -46,6 +46,7 @@
 		<Unit filename="tests.cpp" />
 		<Unit filename="tests.h" />
 		<Unit filename="unique_ptr.h" />
+		<Unit filename="utils.h" />
 		<Unit filename="weak_ptr.h" />
 		<Extensions>
 			<code_completion />

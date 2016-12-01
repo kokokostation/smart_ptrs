@@ -1,6 +1,7 @@
 #ifndef SW_BASE_H_INCLUDED
 #define SW_BASE_H_INCLUDED
 
+#include "utils.h"
 #include "proxy.h"
 
 namespace tuz
@@ -38,7 +39,7 @@ void SW_base<T, P>::set_proxy(Proxy_base<T>* another_proxy) noexcept
 template<typename T, typename P>
 void SW_base<T, P>::check_out() noexcept
 {
-    proxy->check_out(static_cast<const P&>(*this));
+    proxy->check_out(Identity<P>());
     if(proxy->need_deletion())
         delete proxy;
 }
@@ -46,7 +47,7 @@ void SW_base<T, P>::check_out() noexcept
 template<typename T, typename P>
 void SW_base<T, P>::check_in() noexcept
 {
-    proxy->check_in(static_cast<const P&>(*this));
+    proxy->check_in(Identity<P>());
 }
 
 template<typename T, typename P>

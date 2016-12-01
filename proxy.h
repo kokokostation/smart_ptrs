@@ -1,6 +1,7 @@
 #ifndef PROXY_H_INCLUDED
 #define PROXY_H_INCLUDED
 
+#include "utils.h"
 #include "unique_ptr.h"
 
 namespace tuz
@@ -27,13 +28,13 @@ explicit Proxy_base(T* ptr, size_t shared_links = 0, size_t weak_links = 0) noex
     shared_links(shared_links), weak_links(weak_links), ptr(ptr) {};
 
     template<typename D>
-    void check_in(const shared_ptr<D>& sp) noexcept;
+    void check_in(Identity<shared_ptr<D>> sp) noexcept;
     template<typename D>
-    void check_in(const weak_ptr<D>& wp) noexcept;
+    void check_in(Identity<weak_ptr<D>> wp) noexcept;
     template<typename D>
-    void check_out(const shared_ptr<D>& sp) noexcept;
+    void check_out(Identity<shared_ptr<D>> sp) noexcept;
     template<typename D>
-    void check_out(const weak_ptr<D>& wp) noexcept;
+    void check_out(Identity<weak_ptr<D>> wp) noexcept;
 
     size_t links_count() const noexcept;
 
@@ -67,21 +68,21 @@ bool Proxy_base<T>::expired() const noexcept
 
 template<typename T>
 template<typename D>
-void Proxy_base<T>::check_in(const shared_ptr<D>& sp) noexcept
+void Proxy_base<T>::check_in(Identity<shared_ptr<D>> sp) noexcept
 {
     ++shared_links;
 }
 
 template<typename T>
 template<typename D>
-void Proxy_base<T>::check_in(const weak_ptr<D>& wp) noexcept
+void Proxy_base<T>::check_in(Identity<weak_ptr<D>> wp) noexcept
 {
     ++weak_links;
 }
 
 template<typename T>
 template<typename D>
-void Proxy_base<T>::check_out(const shared_ptr<D>& sp) noexcept
+void Proxy_base<T>::check_out(Identity<shared_ptr<D>> sp) noexcept
 {
     if(shared_links == 1)
         delete_(ptr);
@@ -91,7 +92,7 @@ void Proxy_base<T>::check_out(const shared_ptr<D>& sp) noexcept
 
 template<typename T>
 template<typename D>
-void Proxy_base<T>::check_out(const weak_ptr<D>& wp) noexcept
+void Proxy_base<T>::check_out(Identity<weak_ptr<D>> wp) noexcept
 {
     --weak_links;
 }
